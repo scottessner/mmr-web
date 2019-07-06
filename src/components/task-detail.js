@@ -23,6 +23,14 @@ class TaskDetail extends Component {
                         </Grid>
                         <Grid item xs={8} sm={10}>
                             <Typography variant={"h6"}>{this.props.task.host}</Typography>
+                            <Grid container alignItems={"center"}>
+                                <Grid item xs={2} sm={2}>
+                                    <Typography variant={"body1"}>Type: {this.props.task.type}</Typography>
+                                </Grid>
+                                <Grid item xs={2} sm={2}>
+                                    <Typography variant={"body1"}>Id: {this.props.task.id}</Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                         <Grid item xs={2} sm={1} align={"right"}>
                             <TaskProgress task={this.props.task} />
@@ -31,11 +39,14 @@ class TaskDetail extends Component {
                     <Grid container>
                         <Grid item xs={2} sm={1}/>
                         <Grid item xs={8} sm={10}>
-                            <Typography variant={"body1"}>{this.props.task.source_path}</Typography>
+                            <TaskTitle task={this.props.task} />
                             <Typography variant={"body1"}>
-                                Added: <Time value={this.props.task.time_added} format={"DD/MM/YYYY hh:mm A"}/>
+                                Added: <Time value={this.props.task.time_added} format={"MM/DD/YYYY hh:mm A"}/>
                             </Typography>
                             <TaskDuration task={this.props.task}/>
+                            <Typography variant={"body1"}>
+                                Updated: <Time value={this.props.task.time_updated} format={"MM/DD/YYYY hh:mm A"}/>
+                            </Typography>
                         </Grid>
                         <Grid item xs={2} sm={1} align={"right"}>
                             {/*<TaskProgress task={this.props.task} />*/}
@@ -48,11 +59,30 @@ class TaskDetail extends Component {
     }
 }
 
+class TaskTitle extends Component {
+    render() {
+        if (this.props.task.title) {
+            return (
+                <Typography variant={"body1"}>{this.props.task.title.path}</Typography>
+            );
+        }
+        else {
+            return (
+                <Typography variant={"body1"}></Typography>
+            );
+
+        }
+    }
+}
+
 class TaskProgress extends Component {
     render() {
         if (this.props.task.state == "active") {
             return (
-                <CircularProgress variant={"static"} color={"secondary"} value={this.props.task.progress}/>
+                <div>
+                    <CircularProgress variant={"static"} color={"secondary"} value={this.props.task.progress}/>
+                    <Typography variant={"body1"}>{this.props.task.progress}%</Typography>
+                </div>
             );
         }
         else {
@@ -67,12 +97,14 @@ class TaskDuration extends Component {
     render() {
         switch (this.props.task.state){
             case "open": {
-                return "";
+                return(
+                    <div></div>
+                );
             }
             case "active": {
                 return(
                     <Typography variant={"body1"}>
-                        Started: <Time value={this.props.task.time_started} format={"DD/MM/YYYY hh:mm A"}/>
+                        Started: <Time value={this.props.task.time_started} format={"MM/DD/YYYY hh:mm A"}/>
                     </Typography>
                 );
             }
@@ -80,12 +112,17 @@ class TaskDuration extends Component {
                 return(
                     <div>
                         <Typography variant={"body1"}>
-                            Started: <Time value={this.props.task.time_started} format={"DD/MM/YYYY hh:mm A"}/>
+                            Started: <Time value={this.props.task.time_started} format={"MM/DD/YYYY hh:mm A"}/>
                         </Typography>
                         <Typography variant={"body1"}>
-                            Completed: <Time value={this.props.task.time_completed} format={"DD/MM/YYYY hh:mm A"}/>
+                            Completed: <Time value={this.props.task.time_completed} format={"MM/DD/YYYY hh:mm A"}/>
                         </Typography>
                     </div>
+                );
+            }
+            case "error": {
+                return(
+                    <div></div>
                 );
             }
         }

@@ -13,7 +13,7 @@ class TaskMonitor extends Component {
 
     componentDidMount() {
     this.onClick()
-    let timer = setInterval(this.onClick, 60000);
+    let timer = setInterval(this.onClick, 30000);
     this.setState({timer});
     }
 

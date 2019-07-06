@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ROOT_URL= `http://ssessner.com/mmr-api/v1/tasks?filter=open&filter=active`;
+const ROOT_URL= `http://ssessner.com/mmr-api/v1/tasks/search?state=active`;
 
 export const FETCH_TASKS = 'FETCH_TASKS';
 

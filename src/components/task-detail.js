@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -49,7 +48,6 @@ class TaskDetail extends Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={2} sm={1} align={"right"}>
-                            {/*<TaskProgress task={this.props.task} />*/}
                         </Grid>
 
                     </Grid>
@@ -77,7 +75,7 @@ class TaskTitle extends Component {
 
 class TaskProgress extends Component {
     render() {
-        if (this.props.task.state == "active") {
+        if (this.props.task.state === "active") {
             return (
                 <div>
                     <CircularProgress variant={"static"} color={"secondary"} value={this.props.task.progress}/>

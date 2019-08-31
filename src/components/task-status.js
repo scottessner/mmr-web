@@ -3,6 +3,7 @@ import useInterval from '../hooks/use-interval';
 
 export default () => {
     const [taskStatus, setTaskStatus] = useState(defaultTaskStatus);
+    fetchData();
 
     async function fetchData() {
 

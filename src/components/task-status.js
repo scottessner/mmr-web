@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import useInterval from '../hooks/use-interval';
+import axios from 'axios';
 
-export default () => {
+const TaskStatus = () => {
     const [taskStatus, setTaskStatus] = useState(defaultTaskStatus);
-    fetchData();
 
-    async function fetchData() {
+    const fetchData = async () => {
 
-        const res = await fetch('https://ssessner.com/mmr-api/v1/status/tasks');
-        res
-            .json()
-            .then(res => setTaskStatus(res));
+        const res = await axios.get('https://ssessner.com/mmr-api/v1/status/tasks');
+        setTaskStatus(res.data);
 
-    }
+    };
+
+    useEffect(() =>{ fetchData(); }, []);
 
     useInterval(() => {
         fetchData();
-    }, 5000)
+    }, 5000);
 
     return (
         <div>
@@ -28,5 +28,7 @@ export default () => {
     )
 
 }
+
+export default TaskStatus;
 
 const defaultTaskStatus = {"scan": {"active": 0, "open": 0, "error": 0, "complete": 0}, "title_info": {"active": 0, "open": 0, "error": 0, "complete": 0}, "compress": {"active": 0, "open": 0, "error": 0, "complete": 0}, "remux": {"active": 0, "open": 0, "error": 0, "complete": 0}, "preview": {"active": 0, "open": 0, "error": 0, "complete": 0}, "rename": {"active": 0, "open": 0, "error": 0, "complete": 0}}

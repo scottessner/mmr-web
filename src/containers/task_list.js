@@ -1,13 +1,22 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import useInterval from '../hooks/use-interval';
+import axios from 'axios';
 import TaskDetail from '../components/task-detail';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
-class TaskList extends Component {
+const TaskList = () => {
+    const [tasks, setTasks] = useState([]);
 
-    renderTask() {
-        return this.props.tasks.map((task) => {
+    const fetchData = async () => {
+
+        const res = await axios.get('https://ssessner.com/mmr-api/v1/tasks/search?state=active');
+        setTasks(res.data);
+
+    };
+
+    const renderTask = () => {
+        return tasks.map((task) => {
             return (
                 <Grid item xs={12} key={task.id}>
                     <TaskDetail task={task} />
@@ -17,17 +26,17 @@ class TaskList extends Component {
         });
     }
 
-    render() {
-        return (
-            <Grid container>
-                {this.renderTask()}
-            </Grid>
-        )
-    }
-}
+    useEffect(() =>{ fetchData(); }, []);
 
-function mapStateToProps({tasks}) {
-    return { tasks };
-}
+    useInterval(() => {
+        fetchData();
+    }, 30000);
 
-export default connect(mapStateToProps)(TaskList);
+    return (
+        <Grid container>
+            {renderTask()}
+        </Grid>
+    );
+};
+
+export default TaskList;

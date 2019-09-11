@@ -2,33 +2,29 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from 'material-ui/styles';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
-const styles = theme => ({
-    toolbar: {
-        height: 200,
-    },
-})
-
-function MMRAppBar(props) {
-    const { classes } = props;
+function MMRAppBar() {
 
     return (
         <div>
             <AppBar position={"static"}>
                 <ToolBar>
-                    <Typography variant={'h6'} color={"inherit"}>
+                    <Typography variant={'h6'} color={"inherit"} style={{flexGrow: 1}} align={"left"}>
                         Tasks
                     </Typography>
+                    <Button
+                        color={"inherit"}
+                        align={"right"}
+                        onClick={() => {axios.post('https://ssessner.com/mmr-api/v1/tasks', {type: "scan"});}}
+                    >
+                        Schedule Scan
+                    </Button>
                 </ToolBar>
             </AppBar>
-            {/*<Grid container className={classes.demo}>*/}
-            {/*</Grid>*/}
         </div>
     );
 }
 
 export default MMRAppBar;
-// export default withStyles(styles)(MMRAppBar)

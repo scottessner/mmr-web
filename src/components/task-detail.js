@@ -123,6 +123,11 @@ class TaskDuration extends Component {
                     <div></div>
                 );
             }
+            default: {
+                return(
+                    <div></div>
+                );
+            }
         }
 
     }

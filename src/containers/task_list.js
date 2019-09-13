@@ -11,7 +11,7 @@ const TaskList = () => {
     const fetchData = async () => {
 
         const res = await axios.get('https://ssessner.com/mmr-api/v1/tasks/search?state=active');
-        setTasks(res.data);
+        setTasks(res.data.sort(function(a, b){return new Date(b.time_updated) - new Date(a.time_updated)}));
 
     };
 

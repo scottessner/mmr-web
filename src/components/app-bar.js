@@ -16,7 +16,6 @@ function MMRAppBar() {
                     </Typography>
                     <Button
                         color={"inherit"}
-                        align={"right"}
                         onClick={() => {axios.post('https://ssessner.com/mmr-api/v1/tasks', {type: "scan"});}}
                     >
                         Schedule Scan

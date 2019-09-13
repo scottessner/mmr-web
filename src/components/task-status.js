@@ -6,6 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid'
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import { useTheme } from '@material-ui/styles';
+import {Badge} from "@material-ui/core";
+// import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
 
 const TaskStatus = () => {
     const [taskStatus, setTaskStatus] = useState(defaultTaskStatus);
@@ -26,25 +31,37 @@ const TaskStatus = () => {
     return (
         <div>
             <Grid container spacing={16} style={{padding: '50px 20px 20px'}}>
-                <Grid item xs={4} sm={3} md={2} >
+                <Grid item xs={12}>
+                    {/*<ButtonGroup color={"primary"}>*/}
                     <TaskStatusDetail tasktype={taskStatus.scan} name={'Scan'}/>
-                </Grid>
-                <Grid item xs={4} sm={3} md={2}>
                     <TaskStatusDetail tasktype={taskStatus.title_info} name={'Title Info'}/>
-                </Grid>
-                <Grid item xs={4} sm={3} md={2}>
                     <TaskStatusDetail tasktype={taskStatus.compress} name={'Compress'}/>
-                </Grid>
-                <Grid item xs={4} sm={3} md={2}>
                     <TaskStatusDetail tasktype={taskStatus.remux} name={'Remux'}/>
-                </Grid>
-                <Grid item xs={4} sm={3} md={2}>
                     <TaskStatusDetail tasktype={taskStatus.rename} name={'Rename'}/>
-                </Grid>
-                <Grid item xs={4} sm={3} md={2}>
                     <TaskStatusDetail tasktype={taskStatus.preview} name={'Preview'}/>
+                    {/*</ButtonGroup>*/}
                 </Grid>
             </Grid>
+            {/*<Grid container spacing={16} style={{padding: '50px 20px 20px'}}>*/}
+            {/*    <Grid item xs={4} sm={3} md={2} >*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.scan} name={'Scan'}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={4} sm={3} md={2}>*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.title_info} name={'Title Info'}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={4} sm={3} md={2}>*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.compress} name={'Compress'}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={4} sm={3} md={2}>*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.remux} name={'Remux'}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={4} sm={3} md={2}>*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.rename} name={'Rename'}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={4} sm={3} md={2}>*/}
+            {/*        <TaskStatusDetail tasktype={taskStatus.preview} name={'Preview'}/>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
         </div>
     );
 
@@ -52,24 +69,9 @@ const TaskStatus = () => {
 
 const TaskStatusDetail = ({tasktype, name}) => {
 
-    var style = {
-        backgroundColor: titleColor(),
-    };
-
-    function titleColor() {
-        if (tasktype.active > 0) {
-            return "green";
-        } else if(tasktype.open > 0) {
-            return "blue";
-        } else {
-            return "gray";
-        }
-    }
-
     return (
-        <Card align={"left"}>
-            <CardHeader title = {name} style={style} titleTypographyProps={{noWrap: true}}/>
-            <CardContent>
+        <Tooltip title={
+            <React.Fragment>
                 <Typography variant={"body1"} component={"p"} noWrap={true}>
                     Open: {tasktype.open}
                 </Typography>
@@ -82,8 +84,12 @@ const TaskStatusDetail = ({tasktype, name}) => {
                 <Typography variant={"body1"} component={"p"} noWrap={true}>
                     Error: {tasktype.error}
                 </Typography>
-            </CardContent>
-        </Card>
+            </React.Fragment>
+        }>
+                <Badge badgeContent={tasktype.open + tasktype.active} color={"secondary"} >
+                    <Button variant={"outlined"} size={"large"} color={"primary"} style={{flexGrow: 1}}>{name}</Button>
+                </Badge>
+        </Tooltip>
     );
 }
 
